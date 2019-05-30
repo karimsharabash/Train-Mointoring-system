@@ -1,10 +1,10 @@
 const express = require("express");
-const mongooseuser = require('./ConnectionToDatabase/dbUser');
-const mongooseTrain= require('./ConnectionToDatabase/trainDb');
+const mongoose= require("./ConnectionToDatabase/trainDb");
 const mqtt = require('mqtt')
 const app = express();
 const body_parser = require('body-parser');
 const path = require("path");
+const userRoute=require('./routes/userRoute')
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -12,10 +12,7 @@ app.use(function (req, res, next) {
 });
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
-app.post('/user',(req,res)=>{
-
-  console.log(req.body)
-})
+app.use('/user',userRoute)
 
 /*************************** USING MQTT *********/
 //connection to the broker default tcp port on ubuntu 
