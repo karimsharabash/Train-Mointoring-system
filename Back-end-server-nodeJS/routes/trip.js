@@ -25,7 +25,7 @@ router.get('/:id',(req,res)=>
 
 
 router.get("/",(req,res)=>{
-    // console.log(req)
+    
     tripModel.find()
     .exec((err,trips)=>
     {
