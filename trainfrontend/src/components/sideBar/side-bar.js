@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './side-bar.css'
 class SideBar extends Component {
+  
   render() {
     return (
       <div className="nav-side-menu">
@@ -16,7 +17,7 @@ class SideBar extends Component {
                       </a>
             </li>
 
-            <li data-toggle="collapse" data-target="#products" className="collapsed active">
+            <li data-toggle="collapse" data-target="#products" className="collapsed ">
               <a href="#"><i className="fa fa-gift fa-lg"></i>Manage User <span className="arrow"></span></a>
             </li>
             <ul className="sub-menu collapse" id="products">

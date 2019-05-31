@@ -2,16 +2,28 @@ import React, { Component } from 'react'
 import './signup.css'
 import axios from 'axios'
 class SignUp extends Component {
+ MyContext = React.createContext('test');
     state={
         name:null,
         password:null
     }
+       async  sendDataToserver(){
+        const response = await axios.post('http://localhost:5000/user/login',{data:this.state})
+        if(response.data=="invalid password")
+        {
+           console.log(response)
+        }
+        else{
+            console.log(response)
+            this.props.history.push('/Admin');
+        }
+    }
+
     handlesubmit=(e)=>{
      e.preventDefault();
-     console.log(this.state)
+     this.sendDataToserver();
      this.refs.name.value="";
      this.refs.password.value="";  
-     this.props.history.push('/Admin');
     
     }
     addvalue=(e)=>{

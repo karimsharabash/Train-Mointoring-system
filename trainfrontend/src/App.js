@@ -17,6 +17,7 @@ function App() {
      <Route exact path='/' component={SignUp}/>
      <Route path='/Admin' component={SideBar}/> 
      <Route path='/map' component={MapContainer}/> 
+     <Route path='/adduser' component={addUser}/> 
      </div>
      </BrowserRouter>
   );
