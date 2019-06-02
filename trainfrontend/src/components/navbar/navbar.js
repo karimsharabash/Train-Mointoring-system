@@ -19,7 +19,7 @@ const Navbar = ()=>{
         <Link to="/newDriver" className="btn nav-item btn-outline-info " style={{marginRight:"10px"}}>add driver</Link>
       
         <NavLink to="/newTrip" className="btn nav-item btn-outline-info" style={{marginRight:"20px"}} >start new trip</NavLink>
-        <Link to="/login" className="btn nav-item btn-outline-info">login</Link>
+        <Link to="/user/login" className="btn nav-item btn-outline-info">login</Link>
         </div>
     </nav>
 	

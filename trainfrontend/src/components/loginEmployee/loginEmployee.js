@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Requests from '../../authentication/authenticationWithApi'
-import './signup.css'
+import './loginEmployee.css'
 import axios from 'axios'
-class SignUp extends Component {
+class loginEmployee extends Component {
  
     state={
         nationalId:null,
@@ -16,7 +16,7 @@ class SignUp extends Component {
         }
         else{
             sessionStorage.setItem('token',response.data.toString())
-            this.props.history.push('/Admin');
+            this.props.history.push('/user');
             
         }
     }
@@ -51,4 +51,4 @@ class SignUp extends Component {
 }
 
 
-export default SignUp ;
+export default loginEmployee ;
