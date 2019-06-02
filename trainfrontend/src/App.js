@@ -19,11 +19,11 @@ function App() {
     <BrowserRouter>
     <div className="App">
       {/* login for the admin */}
-     <Route exact path='/' component={SignUp}/>
+     <Route exact path='/login/admin' component={SignUp}/>
      <AuthRoute path='/Admin' component={SideBar}/> 
      {/* login for the user  */}
      <Route exact path='/login/user' component={loginEmployee}/>
-     <AuthRouteUser  path='/user' component={navbar}/>
+     <AuthRouteUser  path='/' component={navbar}/>
     {/* <Route path='/map' component={TrainMap}/>  */}
      <AuthRouteUser path='/adduser' component={addUser}/> 
      <AuthRouteUser path='/Trips' component={Trips}/> 
