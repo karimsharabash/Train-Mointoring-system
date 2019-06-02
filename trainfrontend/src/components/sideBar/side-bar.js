@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import './side-bar.css'
 class SideBar extends Component {
-  
+
+  logout=()=>{
+    sessionStorage.removeItem('token');
+    this.props.history.push('/');
+  }
+
+
   render() {
     return (
       <div className="nav-side-menu">
@@ -29,7 +35,7 @@ class SideBar extends Component {
                 <i className="fa fa-users fa-lg"></i> Users
                       </a>
             </li>
-            <li data-toggle="collapse" data-target="#products" className="collapsed ">
+            <li data-toggle="collapse" data-target="#products" className="collapsed " onClick={this.logout}>
               <a href="#"><i className="fa fa-sign-out fa-lg"></i>logout </a>
             </li>
           </ul>
