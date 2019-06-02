@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const userSchema = new mongoose.Schema({
-  userName: { type: String },
+  nationalId: { type: String },
   // firstName: String,
   // NationalId:Number,
   // email: { type: String, unique: true, required : true },
   Password:{type: String,required : true},
   // image: String,
+  role:{ type: String, enum: ['admin', 'user'] }
   // privileges:[{type:String,required:true}],
  })
  userSchema.statics.hashThePassword = function hashPassword(password){

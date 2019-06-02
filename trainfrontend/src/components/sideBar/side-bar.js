@@ -18,22 +18,19 @@ class SideBar extends Component {
             </li>
 
             <li data-toggle="collapse" data-target="#products" className="collapsed ">
-              <a href="#"><i className="fa fa-gift fa-lg"></i>Manage User <span className="arrow"></span></a>
+              <a href="#"><i className="fa fa-user fa-lg"></i>Manage User <span className="arrow"></span></a>
             </li>
             <ul className="sub-menu collapse" id="products">
               <li><a href="/adduser">Add User</a></li>
               <li><a href="/Deleteuser">Delete User</a></li>
              </ul>
-              <li>
-              <a href="#">
-                <i className="fa fa-user fa-lg"></i> Profile
-                      </a>
-            </li>
-
             <li>
               <a href="#">
                 <i className="fa fa-users fa-lg"></i> Users
                       </a>
+            </li>
+            <li data-toggle="collapse" data-target="#products" className="collapsed ">
+              <a href="#"><i className="fa fa-sign-out fa-lg"></i>logout </a>
             </li>
           </ul>
         </div>
