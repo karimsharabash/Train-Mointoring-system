@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Requests from '../../authentication/authenticationWithApi'
-import './signup.css'
 import axios from 'axios'
 class SignUp extends Component {
  
