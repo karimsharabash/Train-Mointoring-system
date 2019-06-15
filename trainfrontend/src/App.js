@@ -9,7 +9,7 @@ import SideBar from './components/sideBar/side-bar'
 import TrainMap from "./components/Trip/map/trainMap"
 import Trips from "./components/Trip/map/trips"
 import navbar from "./components/navbar/navbar"
-import NewTrip from "./components/Trip/newTrip/newTrip"
+import NewTrip from "./components/Trip/newTrip/newTripForm"
 import loginEmployee from "./components/loginEmployee/loginEmployee"
 import AuthRoute from "./authentication/admin-authentication"
 import AuthRouteUser from "./authentication/user-authentication"

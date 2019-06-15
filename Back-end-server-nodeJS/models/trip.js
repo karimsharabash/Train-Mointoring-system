@@ -18,7 +18,14 @@ const tripSchema = mongoose.Schema({
         // ref: "Authors",
         required: true
     },
-    date: { type: Date, default: Date.now },
+    source:{            //source Station
+        type:String,
+        required:true
+    },
+    dest:{              //destination Station
+        type:String,
+        required:true
+    },
     startDate :{type:Date}
 })
 

@@ -5,12 +5,20 @@ const tripModel = require("../models/trip");
 router.post("/",(req,res)=>
 {
   let newTrip = req.body;
+
   newTrip.startDate=Date.now();
+  newTrip.location={
+    longitude:31.00767,
+    latitude:30.57108
+  }
+//   newTrip.location.longitude=31.00767;
+//   newTrip.location.latitude=30.57108;
+
   const trip = new tripModel(newTrip);
-    trip.save()
-    .then((err,data)=>{
+    trip.save((err,data)=>{
         if(err) return res.status(200).send(err);
-    })
+        console.log(data)})
+    
     res.status(200).send({message:"done"});
 })
 
