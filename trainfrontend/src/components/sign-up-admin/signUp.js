@@ -9,7 +9,7 @@ class SignUp extends Component {
     }
        async  sendDataToserver(){
         const response = await axios.post('http://localhost:5000/user/login',{data:this.state})
-        if(response.data=="invalid password"||response.data=="no such a user")
+        if(response.data==="invalid password"||response.data==="no such a user")
         {
            console.log(response)
         }

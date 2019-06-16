@@ -14,6 +14,7 @@ router.get('/',verfiyToken,(req, res) => {
 /***************post routs ***************************/
 
 router.post('/login', (req, res) => {
+  console.log(req.body.data.password)
   let nationalId = req.body.data.nationalId;
   let password = req.body.data.password;
   let promise = userModel.findOne({ nationalId: nationalId }).exec();

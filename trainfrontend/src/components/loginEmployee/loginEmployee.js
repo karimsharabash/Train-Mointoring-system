@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Requests from '../../authentication/authenticationWithApi'
 import './loginEmployee.css'
 import axios from 'axios'
 class loginEmployee extends Component {
@@ -10,13 +9,13 @@ class loginEmployee extends Component {
     }
        async  sendDataToserver(){
         const response = await axios.post('http://localhost:5000/user/login',{data:this.state})
-        if(response.data=="invalid password"||response.data=="no such a user")
+        if(response.data==="invalid password"||response.data==="no such a user")
         {
            console.log(response)
         }
         else{
             sessionStorage.setItem('token',response.data.toString())
-            this.props.history.push('/user');
+            this.props.history.push('/');
             
         }
     }
