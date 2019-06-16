@@ -21,18 +21,18 @@ function App() {
     <BrowserRouter>
     <div className="App">
       {/* Routes for the admin */}
-     <AuthRoute path='/logs' component={LogsTable}/> 
+     <Route path='/logs' component={LogsTable}/> 
      <Route exact path='/login/admin' component={SignUp}/>
-     <AuthRoute path='/Admin' component={SideBar}/> 
+     <Route path='/Admin' component={SideBar}/> 
      {/* Routes for the user  */}
      <Route exact  path='/user/login' component={loginEmployee}/>
-     <AuthRouteUser exact path='/' component={navbar}/>
+     <Route exact path='/' component={navbar}/>
     {/* <Route path='/map' component={TrainMap}/>  */}
-     <AuthRouteUser path='/adduser' component={addUser}/> 
-     <AuthRouteUser path='/Trips' component={Trips}/> 
+     <Route path='/adduser' component={addUser}/> 
+     <Route path='/Trips' component={Trips}/> 
      {/* <Route path='/trip/:tripId' component={}/>  */}
      {/* <Route path='/newDriver' component={}/>  */}
-     <AuthRouteUser path='/newTrip' component={NewTrip}/> 
+     <Route path='/newTrip' component={NewTrip}/> 
      </div>
      </BrowserRouter>
   );
