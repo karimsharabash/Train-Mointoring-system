@@ -6,6 +6,7 @@ import {BrowserRouter,Route} from 'react-router-dom'
 import SignUp from './components/sign-up-admin/signUp'
 import addUser from './components/add-user/addUser'
 import SideBar from './components/sideBar/side-bar'
+import LogsTable from './components/Logs-for-admin/logs'
 import TrainMap from "./components/Trip/map/trainMap"
 import Trips from "./components/Trip/map/trips"
 import navbar from "./components/navbar/navbar"
@@ -20,6 +21,7 @@ function App() {
     <BrowserRouter>
     <div className="App">
       {/* Routes for the admin */}
+     <AuthRoute path='/logs' component={LogsTable}/> 
      <Route exact path='/login/admin' component={SignUp}/>
      <AuthRoute path='/Admin' component={SideBar}/> 
      {/* Routes for the user  */}
