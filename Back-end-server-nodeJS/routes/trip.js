@@ -14,10 +14,10 @@ router.post("/",(req,res)=>
 //   newTrip.location.longitude=31.00767;
 //   newTrip.location.latitude=30.57108;
 
-  const trip = new tripModel(newTrip);
-    trip.save((err,data)=>{
-        if(err) return res.status(200).send(err);
-        console.log(data)})
+//   const trip = new tripModel(newTrip);
+//     trip.save((err,data)=>{
+//         if(err) return res.status(200).send(err);
+//         console.log(data)})
     
     res.status(200).send({message:"done"});
 })
