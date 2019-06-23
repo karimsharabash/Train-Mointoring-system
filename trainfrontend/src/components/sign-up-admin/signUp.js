@@ -15,7 +15,7 @@ class SignUp extends Component {
         }
         else{
             sessionStorage.setItem('token',response.data.toString())
-            this.props.history.push('/Admin');
+            this.props.history.push('/Admin/dashboard');
             
         }
     }
