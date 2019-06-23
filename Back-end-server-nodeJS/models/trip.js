@@ -4,6 +4,14 @@ const tripSchema = mongoose.Schema({
         type: String,
         require: true
     },
+    location: {
+        longitude: Number,
+        latitude: Number
+    },
+    vibrationLevel: {
+        type: String,
+        enum: ['low', 'normal', 'high', 'extreme']
+    },
     driverID: {
         // type: mongoose.Schema.Types.ObjectId,
         type:String,
@@ -18,20 +26,7 @@ const tripSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    startDate :{type:Date},
-    points:[{
-        location: {
-            longitude: Number,
-            latitude: Number
-        },
-        vibrationLevel: {
-            type: String,
-            enum: ['low', 'normal', 'high', 'extreme']
-        },
-        motorTemp:{
-            type:Number
-        }
-    }]
+    startDate :{type:Date}
 })
 
 const tripModel = mongoose.model('Trips',tripSchema)

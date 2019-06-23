@@ -19,7 +19,7 @@ class SideBar extends Component {
 
           <ul id="menu-content" className="menu-content collapse out">
             <li>
-              <a href="">
+              <a href="/Admin/dashboard">
                 <i className="fa fa-dashboard fa-lg"></i> Dashboard
                       </a>
             </li>
@@ -28,8 +28,8 @@ class SideBar extends Component {
               <a href=""><i className="fa fa-user fa-lg"></i>Manage User <span className="arrow"></span></a>
             </li>
             <ul className="sub-menu collapse" id="products">
-              <li><a href="/adduser">Add User</a></li>
-              <li><a href="/Deleteuser">Delete User</a></li>
+              <li><a href="/Admin/adduser">Add User</a></li>
+              <li><a href="/Admin/Deleteuser">Delete User</a></li>
              </ul>
             <li>
               <a href="#">
@@ -45,9 +45,7 @@ class SideBar extends Component {
           </ul>
         </div>
       </div>
-      <div className="floatToLeft">
-        <p>ugifuagi</p>
-      </div>
+
       </div>
       )
 

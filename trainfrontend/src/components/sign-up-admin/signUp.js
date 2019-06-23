@@ -30,9 +30,7 @@ class SignUp extends Component {
     addvalue=(e)=>{
 
         this.setState({[e.target.id]:e.target.value})
-       
-       
-    
+
     }
     render() {
 

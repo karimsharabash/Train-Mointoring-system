@@ -1,7 +1,7 @@
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link, BrowserRouter } from 'react-router-dom'
+import { Link,BrowserRouter } from 'react-router-dom'
 const mapStyles = {
   width: '100%',
   height: '100%'
@@ -32,10 +32,10 @@ export class Trips extends Component {
   };
 
   componentDidMount() {
-    axios.get("http://localhost:5000/trip/lastPoint")
+    axios.get("http://localhost:5000/trip")
       .then((res) => {
 
-        console.log(res.data);
+        console.log(res);
         this.setState({
           trips: res.data
         })
@@ -46,11 +46,9 @@ export class Trips extends Component {
   render() {
     const { trips } = this.state
     const tripList = trips.length ? (
-      trips.map((trip) => {
-        console.log(trip.points[0].location.longitude)
+      trips.map((trip) => {      
         return (<Marker key={trip._id}
-
-          position={{ lat: trip.points[0].location.latitude, lng: trip.points[0].location.longitude }}
+          position={{ lat: trip.location.latitude, lng: trip.location.longitude }}
           onClick={this.onMarkerClick}
           name={trip.trainId}
           id={trip._id}
@@ -75,10 +73,10 @@ export class Trips extends Component {
           <div>
             <h4>{this.state.selectedPlace.name}</h4>
             <BrowserRouter>
-              <Link to={"/trip/" + this.state.selectedPlace.id} className=" btn-outline-danger btn">more Details</Link>
-            </BrowserRouter>
-
-
+               <Link to={"/trip/"+ this.state.selectedPlace.id} className=" btn-outline-danger btn">Details</Link>
+             </BrowserRouter>
+            
+            
           </div>
         </InfoWindow>
       </Map>

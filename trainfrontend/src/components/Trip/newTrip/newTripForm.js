@@ -34,14 +34,20 @@ class NewTrip extends Component {
         })
     }
 
-   async submitForm(e) {
+    submitForm(e) {
         e.preventDefault();
         if (this.validate()) {
-            const response  = await axios.post("http://localhost:5000/trip", this.state.newTrip)
-            if (response.data.message = 'done') {
+            if (this.startNewtrip(this.state.newTrip)) {
                 this.props.history.push("/trips")
             }
         }
+    }
+
+    startNewtrip(tripInfo) {
+        axios.post("http://localhost:5000/trip", tripInfo)
+            .then(res => {
+                console.log(res)
+            })
     }
 
     validate() {
@@ -49,7 +55,7 @@ class NewTrip extends Component {
             return true;
         } else {
             this.validator.showMessages();  // rerender to show messages for the first time
-            this.forceUpdate();// you can use the autoForceUpdate option to do this automatically
+            this.forceUpdate();// you can use the autoForceUpdate option to do this automatically`
             return false
         }
     }
@@ -58,6 +64,7 @@ class NewTrip extends Component {
         return (
             <form className="container " onSubmit={this.submitForm} >
                 <fieldset>
+
                     <h2 style={{ marginTop: "2%", marginBottom: "5%" }} >New Trip Information</h2>
                     <Input title="Train Id" name="trainId" placeholder="e.g. 12345" handleChange={this.handleChange} type="text" />
                     <div className="text-danger" style={{ display: 'flex', justifyContent: 'center', marginRight: "8%" }}>
