@@ -35,7 +35,7 @@ export class Trips extends Component {
     axios.get("http://localhost:5000/trip")
       .then((res) => {
 
-        console.log(res);
+        console.log(res.data);
         this.setState({
           trips: res.data
         })
@@ -73,7 +73,7 @@ export class Trips extends Component {
           <div>
             <h4>{this.state.selectedPlace.name}</h4>
             <BrowserRouter>
-               <Link to={"/trip/"+ this.state.selectedPlace.id} className=" btn-outline-danger btn">Details</Link>
+               <Link to={"/trip/"+ this.state.selectedPlace.id} className=" btn-outline-danger btn">more Details</Link>
              </BrowserRouter>
             
             
