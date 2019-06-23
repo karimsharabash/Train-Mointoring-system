@@ -14,6 +14,8 @@ const userSchema = new mongoose.Schema({
   return bcrypt.hashSync(password,10);
 }
 userSchema.methods.isValid = function(hashedpassword){
+  console.log("the password is "+hashedpassword)
+  console.log("the password is "+this.Password)
   return  bcrypt.compareSync(hashedpassword,this.Password);
 }
 const userModel = mongoose.model('user', userSchema);
