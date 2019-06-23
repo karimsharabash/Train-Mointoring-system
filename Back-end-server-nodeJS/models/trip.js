@@ -30,7 +30,13 @@ const tripSchema = mongoose.Schema({
         },
         motorTemp:{
             type:Number
-        }
+        },
+        speed:{type:Number},
+        driverStatus:{
+            type: String,
+            enum: ['existed','sleeping','non found']
+        },
+        pointTimestamp :{type:Date}
     }]
 })
 

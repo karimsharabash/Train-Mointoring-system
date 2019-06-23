@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
+    "geolib": "^3.0.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.11",
     "mqtt": "^3.0.0",

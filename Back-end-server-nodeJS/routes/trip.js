@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const tripModel = require("../models/trip");
 const mqtt = require('mqtt')
+const geolib = require('geolib');
 
 /*************************** USING MQTT *********/
 //connection to the broker default tcp port on ubuntu 
@@ -45,20 +46,37 @@ router.post("/",(req,res)=>
 router.post("/newPoint/:id",(req,res)=>{
     const tripId=req.params.id;
     const newPoint = req.body;
+    newPoint.pointTimestamp=Date.now();
     tripModel.findOne({_id:tripId},"points",(err,trip)=>{
-        console.log(trip);
+        if(trip.points.length !=0){
+        let distance = geolib.getDistance(newPoint.location , trip.points[trip.points.length -1].location ) /1000 //calculate the distance between the last two points in KM
+        let time =parseInt( newPoint.pointTimestamp -  trip.points[trip.points.length -1].pointTimestamp ) /1000 /60/60; // calculate the time difference between the last two points in minutes
+        console.log(time);
+        console.log(distance);
+        newPoint.speed = distance/ time;
+        }
+        else{
+            newPoint.speed = 0;
+        }
         trip.points.push(newPoint);
         trip.save();
+   
+        // parseInt((date2 - date1)
     })
     res.status(200).send({message:"done"});
 })
 
 router.get("/lastPoint",(req,res)=>{
     tripModel.find((err,trips)=>{
-        trips.forEach((trip=>{
+       trips= trips.filter((trip=>{
             const pointsLength= trip.points.length ;
+            if(pointsLength!=0){
             let points=trip.points[pointsLength -1 ]
             trip.points = points;
+            return true;
+            }else{
+             return false;
+            }
         }))
         res.status(200).send(trips );   
      })
