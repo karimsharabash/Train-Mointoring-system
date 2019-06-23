@@ -1,6 +1,3 @@
-html{
-  background: rgb(206, 202, 202);
-}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -8,7 +5,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
- 
 }
 
 code {
@@ -23,12 +19,12 @@ code {
 	width:300px;
 	height:300px;
 }
-.login h1 { color: rgb(24, 22, 22); text-shadow: 0 0 10px rgba(0,0,0,0.3); letter-spacing:1px; text-align:center; }
+.login h1 { color: #fff; text-shadow: 0 0 10px rgba(204, 187, 187, 0.3); letter-spacing:1px; text-align:center; }
 
 input { 
 	width: 100%; 
 	margin-bottom: 10px; 
-	background: rgba(0,0,0,0.3);
+	background: rgba(210, 212, 219, 0.3);
 	border: none;
 	outline: none;
 	padding: 10px;
@@ -45,7 +41,3 @@ input {
 	transition: box-shadow .5s ease;
 }
 input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2) }
-
-.floatToLeft{
-	float: left;
-}

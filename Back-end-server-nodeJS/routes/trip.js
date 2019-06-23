@@ -32,13 +32,19 @@ serverClient.on('message', (topic, message) => {
 router.post("/",(req,res)=>
 {
   let newTrip = req.body;
+
   newTrip.startDate=Date.now();
+  newTrip.location={
+    longitude:31.00767,
+    latitude:30.57108
+  }
+//   newTrip.location.longitude=31.00767;
+//   newTrip.location.latitude=30.57108;
+
   const trip = new tripModel(newTrip);
-    trip.save()
-    .then((savedTrip)=>{
-        serverClient.publish(savedTrip.trainId.toString(), savedTrip._id.toString())
-        
-    })
+    trip.save((err,data)=>{
+        if(err) return res.status(200).send(err);
+        console.log(data)})
     
   res.status(200).send({message:"done"});
 })
@@ -101,7 +107,7 @@ router.get("/",(req,res)=>{
         res.set("content-type","application/json");
         res.status(200).send(trips);
     })
-}) 
+})
 
 router.delete("/",(req,res)=>{
     tripModel.deleteMany()

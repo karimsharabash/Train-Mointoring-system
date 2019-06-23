@@ -4,6 +4,14 @@ const tripSchema = mongoose.Schema({
         type: String,
         require: true
     },
+    location: {
+        longitude: Number,
+        latitude: Number
+    },
+    vibrationLevel: {
+        type: String,
+        enum: ['low', 'normal', 'high', 'extreme']
+    },
     driverID: {
         // type: mongoose.Schema.Types.ObjectId,
         type:String,
