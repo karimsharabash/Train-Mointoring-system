@@ -53,13 +53,15 @@ router.post("/newPoint/:id",(req,res)=>{
     res.status(200).send({message:"done"});
 })
 
-router.get("/lastPoint/:id",(req,res)=>{
-    const tripId=req.params.id;
-    tripModel.findOne({_id:tripId},"points",(err,trip)=>{
-        console.log(trip);
-        const tripPoints=trip.points;
-        res.status(200).send( tripPoints[tripPoints.length -1]);
-    })
+router.get("/lastPoint",(req,res)=>{
+    tripModel.find((err,trips)=>{
+        trips.forEach((trip=>{
+            const pointsLength= trip.points.length ;
+            let points=trip.points[pointsLength -1 ]
+            trip.points = points;
+        }))
+        res.status(200).send(trips );   
+     })
 })
 
 router.get('/:id',(req,res)=>
