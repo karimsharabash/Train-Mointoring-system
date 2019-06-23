@@ -32,7 +32,7 @@ export class Trips extends Component {
   };
 
   componentDidMount() {
-    axios.get("http://localhost:5000/trip")
+    axios.get("http://localhost:5000/trip/lastPoint")
       .then((res) => {
 
         console.log(res);
@@ -46,14 +46,9 @@ export class Trips extends Component {
   render() {
     const { trips } = this.state
     const tripList = trips.length ? (
-<<<<<<< HEAD
-      trips.map((trip) => {
-
-=======
       trips.map((trip) => {      
->>>>>>> 029872ce67c10b6cf2b9637a1feef3acf2f71830
         return (<Marker key={trip._id}
-          position={{ lat: trip.location.latitude, lng: trip.location.longitude }}
+          position={{ lat: trip.points[0].location.latitude, lng: trip.points[0].location.longitude }}
           onClick={this.onMarkerClick}
           name={trip.trainId}
           source={trip.source}

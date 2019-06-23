@@ -28,7 +28,7 @@ function App() {
      <Route path='/Admin' component={SideBar}/> 
      {/* Routes for the user  */}
      <Route exact  path='/user/login' component={loginEmployee}/>
-     <Route exact path='/' component={navbar}/>
+     <Route    path='/' component={navbar}/>
     {/* <Route path='/map' component={TrainMap}/>  */}
      <Route path='/Admin/adduser' component={AddUser}/> 
      <Route path='/Trips' component={Trips}/> 
