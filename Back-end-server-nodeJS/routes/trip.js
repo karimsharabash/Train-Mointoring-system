@@ -32,12 +32,9 @@ serverClient.on('message', (topic, message) => {
 router.post("/",(req,res)=>
 {
   let newTrip = req.body;
-
+  console.log(newTrip)
   newTrip.startDate=Date.now();
-  newTrip.location={
-    longitude:31.00767,
-    latitude:30.57108
-  }
+
 //   newTrip.location.longitude=31.00767;
 //   newTrip.location.latitude=30.57108;
 

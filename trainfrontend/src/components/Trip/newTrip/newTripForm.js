@@ -3,8 +3,9 @@ import Input from "../../DumbComponents/Input"
 import Button from "../../DumbComponents/button"
 import SimpleReactValidator from 'simple-react-validator';
 import axios from "axios"
-
+import DropDownMenu from '../../DumbComponents/Select';
 class NewTrip extends Component {
+     selectedoption="";
     constructor(props) {
         super(props);
         this.validator = new SimpleReactValidator();
@@ -24,6 +25,7 @@ class NewTrip extends Component {
     handleChange(e) {
 
         let value = e.target.value;
+       
         let name = e.target.name;
         this.setState(prevState => {
             return {
@@ -34,11 +36,23 @@ class NewTrip extends Component {
         })
     }
 
+    handleSelectChange(e){
+        console.log(e.value);
+       let  name=e.target.name;
+       console.log(name);
+        this.setState(prevState => {
+            return {
+                newTrip: {
+                    ...prevState.newTrip, [name]: e.value
+                }
+            }
+        })
+    }
     submitForm(e) {
         e.preventDefault();
         if (this.validate()) {
             if (this.startNewtrip(this.state.newTrip)) {
-                this.props.history.push("/user/trips")
+                this.props.history.push("/trips")
             }
         }
     }
@@ -60,6 +74,20 @@ class NewTrip extends Component {
         }
     }
 
+    componentDidMount() {
+        axios.get("http://localhost:5000/driver")
+          .then((res) => {
+    
+            console.log(res);
+            this.setState({
+              trips: res.data
+            })
+          })
+    
+      }
+
+
+
     render() {
         return (
             <form className="container " onSubmit={this.submitForm} >
@@ -70,10 +98,12 @@ class NewTrip extends Component {
                     <div className="text-danger" style={{ display: 'flex', justifyContent: 'center', marginRight: "8%" }}>
                         {this.validator.message('train ID', this.state.newTrip.trainId, 'required|alpha_num')}
                     </div>
-                    <Input title="Driver ID" name="driverID" placeholder="e.g. 120" handleChange={this.handleChange} type="text" />
-                    <div className="text-danger" style={{ display: 'flex', justifyContent: 'center', marginRight: "8%" }}>
-                        {this.validator.message('driver ID', this.state.newTrip.driverID, 'required|alpha_num')}
-                    </div>
+                    {/* <Input title="Driver ID" name="driverID" placeholder="e.g. 120" handleChange={this.handleChange} type="text" /> */}
+                    {/* <div className="text-danger" style={{ display: 'flex', justifyContent: 'center', marginRight: "8%" }}> */}
+                        {/* {this.validator.message('driver ID', this.state.newTrip.driverID, 'required|alpha_num')} */}
+                    {/* </div> */}
+                    <DropDownMenu name="driverID"  title="Driver name" handleChange={(e)=>{this.handleSelectChange(e)}} value={this.state.driverID}/>
+                 
                     <Input title="Trip Source" name="source" placeholder="SOURCE" handleChange={this.handleChange} type="text" />
                     <div className="text-danger" style={{ display: 'flex', justifyContent: 'center', marginRight: "8%" }}>
                         {this.validator.message('source station', this.state.newTrip.source, 'required|alpha_num')}
