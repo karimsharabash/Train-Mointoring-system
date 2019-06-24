@@ -15,7 +15,8 @@ class loginEmployee extends Component {
         }
         else{
             sessionStorage.setItem('token',response.data.toString())
-            this.props.history.push('/');
+            console.log(response)
+            this.props.history.push('/user');
             
         }
     }
@@ -40,8 +41,8 @@ class loginEmployee extends Component {
             <div className="login">
                 <h1>Login</h1>
                 <form  onSubmit={this.handlesubmit}>
-                    <input type="text" name="u" ref="nationalId" id="nationalId"  placeholder="National ID" required="required" onChange={this.addvalue} />
-                    <input type="password"ref="password" name="p" id="password" placeholder="Password" onChange={this.addvalue} required="required" />
+                    <input type="text" name="u" ref="nationalId"  className="input" id="nationalId"  placeholder="National ID" required="required" onChange={this.addvalue} />
+                    <input type="password"ref="password" name="p"  className="input" id="password" placeholder="Password" onChange={this.addvalue} required="required" />
                     <button type="submit" className="btn btn-primary btn-block btn-large">Login</button>
                 </form>
             </div>

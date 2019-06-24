@@ -38,7 +38,7 @@ class NewTrip extends Component {
         e.preventDefault();
         if (this.validate()) {
             if (this.startNewtrip(this.state.newTrip)) {
-                this.props.history.push("/trips")
+                this.props.history.push("/user/trips")
             }
         }
     }

@@ -4,9 +4,10 @@ import Button from "../DumbComponents/button"
 import ImageUploader from 'react-images-upload';
 import SimpleReactValidator from 'simple-react-validator';
 import Requests from '../../authentication/authenticationWithApi'
-
+import axios from 'axios'
 class AddUser extends Component {
-
+   
+    selectedfile;
     constructor(props) {
         super(props);
         this.validator = new SimpleReactValidator();
@@ -17,38 +18,50 @@ class AddUser extends Component {
         this.formRef = null;
 
         this.state = {
-            newUser: {
+            
                 UserName: '',
                 nationalId: '',
                 Password: '',
-            },
-            userImg: ''
+                userImg: ''
+            
+            
         };
 
     }
-    handleChange(e) {
+    // handleChange(e) {
 
-        let value = e.target.value;
-        let name = e.target.name;
-        this.setState(prevState => {
-            return {
-                newUser: {
-                    ...prevState.newUser, [name]: value
-                },
+    //     let value = e.target.value;
+    //     let name = e.target.name;
+    //     this.setState(prevState => {
+    //         return {
+    //             newUser: {
+    //                 ...prevState.newUser, [name]: value
+    //             },
 
-            }
+    //         }
 
-        })
-    }
+    //     })
+    // }
     // handleChangeFile(event) {
     //     this.setState({
     //         userImg: URL.createObjectURL(event.target.files[0])
     //     })
     //   }
     submitForm(e) {
+        
         e.preventDefault();
+        console.log(this.refs.imageToUpload.files[0])
+        let x=this.refs.imageToUpload.files[0].name;
+        console.log(x)
+        this.setState({userImg:x})
+        console.log(this.state.userImg)
         if (this.validate()) {
+         
             if (this.SendToServer(this.state)) {
+                let img=new FormData();
+               img.append('photo',this.refs.imageToUpload.files[0])
+               axios.post('http://localhost:5000/user/img_data',img)
+               .then(res=>{console.log(res)})
                 this.props.history.push("/Admin/dashboard")
             }
         }
@@ -77,8 +90,12 @@ class AddUser extends Component {
         });
     }
 
+    uploading(event)
+    {
+       console.log(event.target.files[0])
+    }
     render() {
-        return (
+        return (<div>
             <form className="container " style={{ marginLeft: "30%" }} ref={(ref) => this.formRef = ref}
                 onSubmit={this.submitForm} >
                 <fieldset>
@@ -102,20 +119,13 @@ class AddUser extends Component {
                     {/* <input className="form-control " type="file"
                         onChange={this.handleChangeFile} /> */}
 
-                    
-                    <ImageUploader style={{ marginLeft: "-5.5%" }}
-                        name="userImage"
-                        withIcon={true}
-                        buttonText='Choose Your User Image '
-                        onChange={this.onDrop}
-                        imgExtension={['.jpg', '.png', '.jpeg']}
-                        maxFileSize={5242880}
-                    />
+                    <span>Selected Image</span>
+                        <input type="file" name="image" className="chooseFileStyle" ref="imageToUpload" />
                     <Button className="btn btn-danger btn-block btn-large" title="Submit"
-                        action={this.submitForm}
-                        style={{ display: 'flex', justifyContent: 'center', marginLeft: "25%" }} />
+                        action={this.submitForm} /> 
                 </fieldset>
-            </form >
+                </form >
+                </div>
         )
     }
 }

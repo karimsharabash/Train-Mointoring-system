@@ -8,7 +8,7 @@ class SignUp extends Component {
         password:null
     }
        async  sendDataToserver(){
-        const response = await axios.post('http://localhost:5000/user/login',{data:this.state})
+        const response = await axios.post('http://localhost:5000/user/login/admin',{data:this.state})
         if(response.data==="invalid password"||response.data==="no such a user")
         {
            console.log(response)
@@ -38,8 +38,8 @@ class SignUp extends Component {
             <div className="login">
                 <h1>Login</h1>
                 <form  onSubmit={this.handlesubmit}>
-                    <input type="text" name="u" ref="nationalId" id="nationalId"  placeholder="National ID" required="required" onChange={this.addvalue} />
-                    <input type="password"ref="password" name="p" id="password" placeholder="Password" onChange={this.addvalue} required="required" />
+                    <input type="text" name="u" className="input" ref="nationalId" id="nationalId"  placeholder="National ID" required="required" onChange={this.addvalue} />
+                    <input type="password"ref="password"  className="input" name="p" id="password" placeholder="Password" onChange={this.addvalue} required="required" />
                     <button type="submit" className="btn btn-primary btn-block btn-large">Login</button>
                 </form>
             </div>

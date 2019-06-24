@@ -6,7 +6,7 @@ import {Redirect,Route} from 'react-router-dom'
 const AuthRouteUser=({component:Component,...rest})=>(
 <Route {...rest} render={props=>(checkauth()?
     (<Component{...props}/>):
-    (<Redirect to={{pathname:'/login/user'}}/> )
+    (<Redirect to={{pathname:'/login'}}/> )
     )} />)
 
 const checkauth=()=>{

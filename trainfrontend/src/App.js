@@ -22,19 +22,19 @@ function App() {
       <Route path='/Admin/dashboard' component={Dashboard}/>
       {/* <Route path='/Admin' exact component={ListUsers}/> */}
       {/* Routes for the admin */}
-
      <Route path='/logs' component={LogsTable}/> 
      <Route exact path='/login/admin' component={SignUp}/>
      <Route path='/Admin' component={SideBar}/> 
-     {/* Routes for the user  */}
-     <Route exact  path='/user/login' component={loginEmployee}/>
-     <Route    path='/' component={navbar}/>
-    {/* <Route path='/map' component={TrainMap}/>  */}
      <Route path='/Admin/adduser' component={AddUser}/> 
-     <Route path='/Trips' component={Trips}/> 
+     {/* Routes for the user  */}
+     <Route exact  path='/login' component={loginEmployee}/>
+     <Route  path='/user' component={navbar}/>
+    {/* <Route path='/map' component={TrainMap}/>  */}
+    
+     <Route path='/user/Trips' component={Trips}/> 
      {/* <Route path='/trip/:tripId' component={}/>  */}
      {/* <Route path='/newDriver' component={}/>  */}
-     <Route path='/newTrip' component={NewTrip}/> 
+     <Route path='/user/newTrip' component={NewTrip}/> 
      </div>
      </BrowserRouter>
  

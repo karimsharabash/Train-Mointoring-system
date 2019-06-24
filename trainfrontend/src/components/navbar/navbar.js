@@ -12,14 +12,14 @@ const Navbar = ()=>{
         <div className="collapse navbar-collapse" id="navbarCollapse1">
             <div className="navbar-nav">
             <Link to="/"  className="nav-item nav-link font-weight-bold">Home</Link>
-            <NavLink to="/trips"  activeClassName="active" className="nav-item nav-link font-weight-bold ">Trips</NavLink>
+            <NavLink to="/user/trips"  activeClassName="active" className="nav-item nav-link font-weight-bold ">Trips</NavLink>
             </div>
         </div>
         <div>
-        <Link to="/newDriver" className="btn nav-item btn-outline-info " style={{marginRight:"10px"}}>add driver</Link>
+        <Link to="/user/newDriver" className="btn nav-item btn-outline-info " style={{marginRight:"10px"}}>add driver</Link>
       
-        <NavLink to="/newTrip" className="btn nav-item btn-outline-info" style={{marginRight:"20px"}} >start new trip</NavLink>
-        <Link to="/user/login" className="btn nav-item btn-outline-info">login</Link>
+        <NavLink to="/user/newTrip" className="btn nav-item btn-outline-info" style={{marginRight:"20px"}} >start new trip</NavLink>
+        <Link to="/login" className="btn nav-item btn-outline-info">login</Link>
         </div>
     </nav>
 	
