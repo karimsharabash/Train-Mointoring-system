@@ -128,7 +128,7 @@ router.get('/',verfiyToken,(req, res) => {
     console.log(req.headers)
     console.log(req.body);
     
-    userModel.find({nationalId: req.body.nationalId}).exec()
+    userModel.find({nationalId: req.body.newUser.nationalId}).exec()
       .then(user =>{
          // to create users with only unique email
         if (user.length >= 1) {
@@ -136,13 +136,13 @@ router.get('/',verfiyToken,(req, res) => {
             //conflict 
           return res.status(409).json({message: "user already exists "})}
         else {
-          let password = req.body.password;
+          let password = req.body.newUser.password;
               const user = new userModel({
                 _id: new mongoose.Types.ObjectId(),
-                userName: req.body.UserName,
-                Password:  userModel.hashThePassword(password),
-                nationalId: req.body.nationalId,
-                userImg: req.body.userImg,
+                userName: req.body.newUser.UserName,
+                password:  userModel.hashThePassword(password),
+                nationalId: req.body.newUser.nationalId,
+                userImg: req.body.newUser.userImg,
                 role:"user"})
                 user.save().then(result => {
                   res.status(201).json({

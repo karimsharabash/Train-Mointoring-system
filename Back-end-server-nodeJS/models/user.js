@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
       required: true,
       unique: true,
   },
-  Password: {
+  password: {
       type: String,
       required: true
   },
@@ -30,8 +30,8 @@ const userSchema = new mongoose.Schema({
   userSchema.methods.isValid = function(hashedpassword){
     console.log("the password is "+hashedpassword)
     console.log(this)
-  console.log("the password is "+this.Password)
-    return  bcrypt.compareSync(hashedpassword,this.Password);
+  console.log("the password is "+this.password)
+    return  bcrypt.compareSync(hashedpassword,this.password);
   }
 userSchema.plugin(uniqueValidator);
 const userModel = mongoose.model('user', userSchema);
