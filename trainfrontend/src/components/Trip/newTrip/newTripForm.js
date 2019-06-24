@@ -3,8 +3,10 @@ import Input from "../../DumbComponents/Input"
 import Button from "../../DumbComponents/button"
 import SimpleReactValidator from 'simple-react-validator';
 import axios from "axios"
-
+import DropDownMenu from '../../DumbComponents/Select';
+import Select from 'react-dropdown-select'
 class NewTrip extends Component {
+    selectedoption = "";
     constructor(props) {
         super(props);
         this.validator = new SimpleReactValidator();
@@ -18,11 +20,13 @@ class NewTrip extends Component {
                 source: '',
                 dest: ''
             },
-            valid: false
+            valid: false,
+            drivers: [],
+            selectedDriver: "",
+
         }
     }
     handleChange(e) {
-
         let value = e.target.value;
         let name = e.target.name;
         this.setState(prevState => {
@@ -33,12 +37,29 @@ class NewTrip extends Component {
             }
         })
     }
+    onChange(e) {
+        console.log(e)
+        if (e[0]) {
+            let name = "driverID";
+            let value = e[0].value;
+            let label = e[0].label;
+            console.log(e[0].label);
+            this.setState(prevState => {
+                return {
+                    newTrip: {
+                        ...prevState.newTrip, [name]: value
+                    }
+                }
+            })
+        }
+
+    }
 
     submitForm(e) {
         e.preventDefault();
         if (this.validate()) {
             if (this.startNewtrip(this.state.newTrip)) {
-                this.props.history.push("/user/trips")
+                this.props.history.push("/trips")
             }
         }
     }
@@ -60,20 +81,42 @@ class NewTrip extends Component {
         }
     }
 
+    componentDidMount() {
+        axios.get("http://localhost:5000/driver")
+            .then((response) => {
+                return response.data
+            })
+            .then(data => {
+                let driversFromApi = data.map(driver => { return { value: driver._id, label: driver.driverName } })
+                this.setState({ drivers: driversFromApi });
+            }).catch(error => {
+                console.log(error);
+            });
+        // axios.get("http://localhost:5000/driver")
+        //     .then((response) => {
+        //         this.setState({
+        //             drivers: response.data
+        //         })
+        //     })
+    }
+
+
+
     render() {
         return (
             <form className="container " onSubmit={this.submitForm} >
                 <fieldset>
-
                     <h2 style={{ marginTop: "2%", marginBottom: "5%" }} >New Trip Information</h2>
                     <Input title="Train Id" name="trainId" placeholder="e.g. 12345" handleChange={this.handleChange} type="text" />
                     <div className="text-danger" style={{ display: 'flex', justifyContent: 'center', marginRight: "8%" }}>
                         {this.validator.message('train ID', this.state.newTrip.trainId, 'required|alpha_num')}
                     </div>
-                    <Input title="Driver ID" name="driverID" placeholder="e.g. 120" handleChange={this.handleChange} type="text" />
-                    <div className="text-danger" style={{ display: 'flex', justifyContent: 'center', marginRight: "8%" }}>
-                        {this.validator.message('driver ID', this.state.newTrip.driverID, 'required|alpha_num')}
-                    </div>
+                    <div className="form-group row">
+                        <label htmlFor="driverID" className="col-md-4 col-form-label">driver Name</label>
+                        <div className="col-md-3" >
+                            <Select value={this.state.selectedDriver} name="driverID" options={this.state.drivers}
+                                onChange={(e) => this.onChange(e)} />
+                        </div></div>
                     <Input title="Trip Source" name="source" placeholder="SOURCE" handleChange={this.handleChange} type="text" />
                     <div className="text-danger" style={{ display: 'flex', justifyContent: 'center', marginRight: "8%" }}>
                         {this.validator.message('source station', this.state.newTrip.source, 'required|alpha_num')}

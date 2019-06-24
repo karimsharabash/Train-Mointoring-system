@@ -15,7 +15,7 @@ app.use(function (req, res, next) {
     next();
 });
 app.use(body_parser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use('/static',express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
 /*************************** USING MQTT *********/

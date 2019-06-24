@@ -9,9 +9,11 @@ router.get('/', (req, res) => {
   driverModel.find()
     .exec((err, data) => {
       if (err) return res.status(400).send(err);
+      console.log(data)
       res.set("content-type", "application/json");
       res.status(200).send(data);
       console.log('Sent list of Drivers');
+      console.log(data)
 
     })
 })
