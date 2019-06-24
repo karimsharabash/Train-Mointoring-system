@@ -13,6 +13,8 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Trips from './components/Trip/map/trips';
 import NewTrip from './components/Trip/newTrip/newTripForm';
 import ListUsers from './components/list-users/listUsers';
+import Home from './components/Home/home';
+import AddDriver from './components/add-driver/addDriver'
 
 function App() {
   return (
@@ -29,12 +31,12 @@ function App() {
      {/* Routes for the user  */}
      <Route exact  path='/login' component={loginEmployee}/>
      <Route  path='/user' component={navbar}/>
-    {/* <Route path='/map' component={TrainMap}/>  */}
-    
      <Route path='/user/Trips' component={Trips}/> 
      {/* <Route path='/trip/:tripId' component={}/>  */}
-     {/* <Route path='/newDriver' component={}/>  */}
+     <Route path='/user/newDriver' component={AddDriver}/> 
      <Route path='/user/newTrip' component={NewTrip}/> 
+     {/* Route for naaadaaa home component  */}
+     <Route exact path='/' component={Home}/>
      </div>
      </BrowserRouter>
  
