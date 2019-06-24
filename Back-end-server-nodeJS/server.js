@@ -6,6 +6,7 @@ const body_parser = require('body-parser');
 const path = require("path");
 const tripRout = require("./routes/trip")
 const userRoute = require("./routes/userRoute")
+const driverRoute = require("./routes/driverRoute")
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -35,6 +36,7 @@ serverClient.on('message', (topic, message) => {
 /*********************Routes********************/
 app.use("/trip",tripRout);
 app.use("/user",userRoute);
+app.use("/driver",driverRoute);
 /**********************************************/
 
 
