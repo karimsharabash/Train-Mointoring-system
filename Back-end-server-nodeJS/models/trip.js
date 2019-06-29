@@ -32,18 +32,10 @@ const tripSchema = mongoose.Schema({
             longitude: Number,
             latitude: Number
         },
-        vibrationLevel: {
-            type: String,
-            enum: ['low', 'normal', 'high', 'extreme']
-        },
         motorTemp:{
             type:Number
         },
         speed:{type:Number},
-        driverStatus:{
-            type: String,
-            enum: ['existed','sleeping','non found']
-        },
         pointTimestamp :{type:Date}
     }]
 })

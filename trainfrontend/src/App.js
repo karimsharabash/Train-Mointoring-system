@@ -15,7 +15,7 @@ import NewTrip from './components/Trip/newTrip/newTripForm';
 import ListUsers from './components/list-users/listUsers';
 import Home from './components/Home/home';
 import AddDriver from './components/add-driver/addDriver'
-
+import TripInfo from "./components/Trip/map/tripInfo"
 function App() {
   return (
     <BrowserRouter>
@@ -32,7 +32,7 @@ function App() {
      <Route exact  path='/login' component={loginEmployee}/>
      <Route  path='/user' component={navbar}/>
      <Route path='/user/Trips' component={Trips}/> 
-     {/* <Route path='/trip/:tripId' component={}/>  */}
+     <Route path='/user/trip/:tripId' component={TripInfo}/> 
      <Route path='/user/newDriver' component={AddDriver}/> 
      <Route path='/user/newTrip' component={NewTrip}/> 
      {/* Route for naaadaaa home component  */}

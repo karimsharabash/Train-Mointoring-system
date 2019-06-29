@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 /************************************ ****************/
 /***************post routes ***************************/
 router.post('/reg', (req, res) => {
-  console.log(req);
+
 
   driverModel.find({
     nationalId: req.body.newDriver.nationalId
