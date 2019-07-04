@@ -3,7 +3,7 @@ const router = express.Router();
 const tripModel = require("../models/trip");
 const mqtt = require('mqtt')
 const geolib = require('geolib');
-
+const verfiyToken = require('./tokenVerfication')
 /*************************** USING MQTT *********/
 //connection to the broker default tcp port on ubuntu 
 options={
@@ -29,7 +29,7 @@ serverClient.on('message', (topic, message) => {
   */
 /****************************************************/
 
-router.post("/",(req,res)=>
+router.post("/",verfiyToken,(req,res)=>
 {
   let newTrip = req.body;
   console.log(newTrip)
@@ -46,7 +46,7 @@ router.post("/",(req,res)=>
   res.status(200).send({message:"done"});
 })
 
-router.post("/newPoint/:id",(req,res)=>{
+router.post("/newPoint/:id",verfiyToken,(req,res)=>{
     const tripId=req.params.id;
     const newPoint = req.body;
     newPoint.pointTimestamp=Date.now();
@@ -69,7 +69,7 @@ router.post("/newPoint/:id",(req,res)=>{
     res.status(200).send({message:"done"});
 })
 
-router.get("/lastPoint",(req,res)=>{
+router.get("/lastPoint",verfiyToken,(req,res)=>{
     tripModel.find((err,trips)=>{
        trips= trips.filter((trip=>{
             const pointsLength= trip.points.length ;
@@ -85,7 +85,7 @@ router.get("/lastPoint",(req,res)=>{
      })
 })
 
-router.get('/:id',(req,res)=>
+router.get('/:id',verfiyToken,(req,res)=>
 {
     const tripId = req.params.id;
     tripModel.find({_id:tripId},(err,trip)=>{
@@ -95,7 +95,7 @@ router.get('/:id',(req,res)=>
 })
 
 
-router.get("/",(req,res)=>{
+router.get("/",verfiyToken,(req,res)=>{
     
     tripModel.find()
     .exec((err,trips)=>
@@ -106,7 +106,7 @@ router.get("/",(req,res)=>{
     })
 })
 
-router.delete("/",(req,res)=>{
+router.delete("/",verfiyToken,(req,res)=>{
     tripModel.deleteMany()
     .then(()=>
     {

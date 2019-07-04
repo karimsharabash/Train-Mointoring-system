@@ -1,6 +1,6 @@
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import React, { Component } from 'react';
-import axios from 'axios';
+import Request from "../../../authentication/authenticationWithApi"
 import { Link,BrowserRouter } from 'react-router-dom'
 const mapStyles = {
   width: '100%',
@@ -32,6 +32,7 @@ export class Trips extends Component {
   };
 
   componentDidMount() {
+    let axios=Request();
     axios.get("http://localhost:5000/trip/lastPoint")
       .then((res) => {
 

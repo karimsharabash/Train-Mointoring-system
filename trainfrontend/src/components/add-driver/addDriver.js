@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Input from "../DumbComponents/Input"
 import Button from "../DumbComponents/button"
 import SimpleReactValidator from 'simple-react-validator';
-import axios from "axios"
+import Request from "../../authentication/authenticationWithApi"
 
 class AddDriver extends Component {
 
@@ -45,6 +45,7 @@ class AddDriver extends Component {
         this.formRef.reset();
     }
     SendToServer(driver) {
+        let axios=Request();
         axios.post("http://localhost:5000/driver/reg", driver)
             .then(res => {
                 console.log(res)

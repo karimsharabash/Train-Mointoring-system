@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Input from "../../DumbComponents/Input"
 import Button from "../../DumbComponents/button"
 import SimpleReactValidator from 'simple-react-validator';
-import axios from "axios"
+import Request from "../../../authentication/authenticationWithApi"
 import DropDownMenu from '../../DumbComponents/Select';
 import Select from 'react-dropdown-select'
 class NewTrip extends Component {
@@ -65,6 +65,7 @@ class NewTrip extends Component {
     }
 
     startNewtrip(tripInfo) {
+        let axios=Request();
         axios.post("http://localhost:5000/trip", tripInfo)
             .then(res => {
                 console.log(res)
@@ -82,6 +83,7 @@ class NewTrip extends Component {
     }
 
     componentDidMount() {
+        let axios=Request();
         axios.get("http://localhost:5000/driver")
             .then((response) => {
                 return response.data

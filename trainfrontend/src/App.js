@@ -4,7 +4,7 @@ import { BrowserRouter,Route } from 'react-router-dom'
 
 
 import SignUp from './components/sign-up-admin/signUp'
-
+import AuthRouteUser from './authentication/user-authentication'
 import SideBar from './components/sideBar/side-bar'
 import navbar from "./components/navbar/navbar"
 import loginEmployee from "./components/loginEmployee/loginEmployee"
@@ -29,18 +29,18 @@ function App() {
      
       <AuthRoute path='/Admin/dashboard/list' component={ListAllUsers}/>
       <AuthRoute path='/edit/:id' component={ EditUser } />
-      <AuthRoute exact path='/login/admin' component={SignUp}/>
+      <Route exact path='/login/admin' component={SignUp}/>
       <AuthRoute path='/Admin' component={SideBar}/> 
     
      {/* Routes for the user  */}
-     <Route exact  path='/login' component={loginEmployee}/>
-     <Route  path='/user' component={navbar}/>
-     <Route path='/user/Trips' component={Trips}/> 
+     <AuthRouteUser exact  path='/Home' component={Home}/>
+     <AuthRouteUser  path='/user' component={navbar}/>
+     <AuthRouteUser path='/user/Trips' component={Trips}/> 
      {/* <Route path='/trip/:tripId' component={}/>  */}
-     <Route path='/user/newDriver' component={AddDriver}/> 
+     <AuthRouteUser path='/user/newDriver' component={AddDriver}/> 
      <Route path='/user/newTrip' component={NewTrip}/> 
      {/* Route for naaadaaa home component  */}
-     <Route exact path='/' component={Home}/>
+     <Route exact path='/' component={loginEmployee}/>
      </div>
      </BrowserRouter>
  

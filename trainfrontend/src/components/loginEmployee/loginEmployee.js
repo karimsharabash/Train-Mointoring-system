@@ -16,7 +16,7 @@ class loginEmployee extends Component {
         else{
             sessionStorage.setItem('token',response.data.toString())
             console.log(response)
-            this.props.history.push('/user');
+            this.props.history.push('/Home');
             
         }
     }
