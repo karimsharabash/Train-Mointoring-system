@@ -15,37 +15,44 @@ const  serverClient = mqtt.connect('tcp://postman.cloudmqtt.com:18800',options);
 
 serverClient.on('connect', () => {
     console.log("connected to cloudMqtt")
-   })
+    
+    serverClient.publish("train1", "hello from Node js")
+    serverClient.subscribe("train1/newPoint");
+})
 // mosquitto_pub -m "message from mosquitto_pub client" -t "test" try to test  
 serverClient.on('message', (topic, message) => {
         // stringfiy  the message to see it 
-    console.log(message.toString())
-    if(topic=="train/newPoint")
+    
+    if(topic.includes("newPoint")!=-1)
     {
-        console.log(message);
+        
+        const messageStr = message.toString()
         let newPoint={};
         const tripId=message.id;
+        const tripName = topic.split("/")[0];
+        console.log(tripName);
         newPoint.motorTemp = message.temp;
          newPoint.pointTimestamp=Date.now();
          newPoint.longitude = 31.022;
          newPoint.latitude =  30.0788;
-    tripModel.findOne({_id:tripId},"points",(err,trip)=>{
-        if(trip.points.length !=0){
-        let distance = geolib.getDistance(newPoint.location , trip.points[trip.points.length -1].location ) /1000 //calculate the distance between the last two points in KM
-        let time =parseInt( newPoint.pointTimestamp -  trip.points[trip.points.length -1].pointTimestamp ) /1000 /60/60; // calculate the time difference between the last two points in minutes
-        console.log(time);
-        console.log(distance);
-        newPoint.speed = distance/ time;
-        }
-        else{
-            newPoint.speed = 0;
-        }
-        trip.points.push(newPoint);
-        trip.save();
+        console.log(newPoint);
+    // tripModel.findOne({_id:tripId},"points",(err,trip)=>{
+    //     if(trip.points.length !=0){
+    //     let distance = geolib.getDistance(newPoint.location , trip.points[trip.points.length -1].location ) /1000 //calculate the distance between the last two points in KM
+    //     let time =parseInt( newPoint.pointTimestamp -  trip.points[trip.points.length -1].pointTimestamp ) /1000 /60/60; // calculate the time difference between the last two points in minutes
+    //     console.log(time);
+    //     console.log(distance);
+    //     newPoint.speed = distance/ time;
+    //     }
+    //     else{
+    //         newPoint.speed = 0;
+    //     }
+    //     trip.points.push(newPoint);
+    //     trip.save();
    
         // parseInt((date2 - date1)
-    })
-    res.status(200).send({message:"done"});
+    // })
+    
     }
     }
   )
@@ -69,6 +76,7 @@ router.post("/",(req,res)=>
     trip.save()
     .then((data)=>{
         serverClient.publish(data.trainId, data._id.toString())
+        serverClient.subscribe(data.trainId+"/newPoint")
     })
     
   res.status(200).send({message:"done"});

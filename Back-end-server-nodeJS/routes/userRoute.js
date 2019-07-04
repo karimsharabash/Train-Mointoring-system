@@ -7,7 +7,7 @@ const verfiyToken = require('./tokenVerfication')
 const bcrypt = require('bcrypt')
 const multer = require('multer');
 const storage = multer.diskStorage({
-  destination: '../public/upload',
+  destination: 'public/upload',
   filename: function (req, file, cb) {
 
     cb(null, file.originalname);
@@ -45,7 +45,7 @@ const upload = multer({ storage: storage });
 // });
 
 /***************get routes ****************************/
-router.get('/',verfiyToken,(req, res) => {
+router.get('/',(req, res) => {
   console.log('req')
   //   userModel.find({}).then(data => {
   //     res.send(data)

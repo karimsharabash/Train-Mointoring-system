@@ -7,7 +7,7 @@ function verfiyToken(req, res, next) {
   if (token) {
     jwt.verify(token, 'secret', function (err, tokenData) {
       if (err) {
-        res.send("auauthorized access")
+        res.send("anauthorized access")
       }
       else if (tokenData) {
         if (tokenData.exp < (new Date().getTime() / 1000))
@@ -17,7 +17,7 @@ function verfiyToken(req, res, next) {
     })
   }
   else {
-    res.send("auauthorized access")
+    res.send("anauthorized access")
   }
 }
 

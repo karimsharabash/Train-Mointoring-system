@@ -1,6 +1,6 @@
 const express = require("express");
 const mongooseTrain= require('./ConnectionToDatabase/trainDb');
-const mqtt = require('mqtt')
+// const mqtt = require('mqtt')
 const app = express();
 const body_parser = require('body-parser');
 const path = require("path");
@@ -20,17 +20,17 @@ app.use(express.json());
 
 /*************************** USING MQTT *********/
 //connection to the broker default tcp port on ubuntu 
-const  serverClient = mqtt.connect('mqtt://localhost:1883');
+// const  serverClient = mqtt.connect('mqtt://localhost:1883');
 
-serverClient.on('connect', () => {
-    serverClient.subscribe('test')
-   })
-// mosquitto_pub -m "message from mosquitto_pub client" -t "test" try to test  
-serverClient.on('message', (topic, message) => {
-        // stringfiy  the message to see it 
-    console.log(message.toString())
-    }
-  )
+// serverClient.on('connect', () => {
+//     serverClient.subscribe('test')
+//    })
+// // mosquitto_pub -m "message from mosquitto_pub client" -t "test" try to test  
+// serverClient.on('message', (topic, message) => {
+//         // stringfiy  the message to see it 
+//     console.log(message.toString())
+//     }
+//   )
 /****************************************************/
   
 /*********************Routes********************/
