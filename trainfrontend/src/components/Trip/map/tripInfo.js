@@ -1,20 +1,23 @@
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import { Map, InfoWindow, Marker, GoogleApiWrapper ,Polyline} from 'google-maps-react';
 import React, { Component } from 'react';
-import Request from "../../../authentication/authenticationWithApi"
+import axios from 'axios';
 import { Link,BrowserRouter } from 'react-router-dom'
 const mapStyles = {
   width: '100%',
   height: '100%'
 };
 
-export class Trips extends Component {
+export class TripInfo extends Component {
+  tripId = this.props.match.params.tripId;
   state = {
     showingInfoWindow: false,  //Hides or the shows the infoWindow
     activeMarker: {},          //Shows the active marker upon click
     selectedPlace: {},          //Shows the infoWindow to the selected place upon a marker
 
-    trips: []
+    trip: {},
+    points :[]
   };
+
   onMarkerClick = (props, marker, e) =>
     this.setState({
       selectedPlace: props,
@@ -32,43 +35,52 @@ export class Trips extends Component {
   };
 
   componentDidMount() {
-    let axios=Request();
- 
-    axios.get("http://localhost:5000/trip/lastPoint")
+   
+    
+    axios.get("http://localhost:5000/trip/"+this.tripId)
       .then((res) => {
 
         console.log(res);
         this.setState({
-          trips: res.data
+          trip: res.data,
+          points :res.data.points
         })
       })
 
   }
 
   render() {
-    const { trips } = this.state
-    const tripList = trips.length ? (
-      trips.map((trip) => {      
-        return (<Marker key={trip._id}
-          position={{ lat: trip.points[0].location.latitude, lng: trip.points[0].location.longitude }}
+    const { points } = this.state
+    const pointList = points.length ? (
+      points.map((point) => {      
+        return (<Marker key={point._id}
+          position={{ lat: point.location.latitude, lng: point.location.longitude }}
           onClick={this.onMarkerClick}
-          name={trip.trainId}
-          source={trip.source}
-          dest={trip.dest}
-          id={trip._id}
+          name={this.state.trip.trainId}
+          source={this.state.trip.source}
+          dest={this.state.trip.dest}
+          temp={point.motorTemp}
+          id={this.state.trip._id}
         />)
       })
-    ) : (console.log("there is no trips available"))
+    ) : (console.log("there is no points available"))
+
+    const pathCoords = points.map( point => {
+      console.log(point)
+      return { lat: point.location.latitude, lng:  point.location.longitude }
+    });
 
     console.log(this.state.selectedPlace)
     return (
       <Map
         google={this.props.google}
-        zoom={7}
+        zoom={10}
         style={mapStyles}
-        initialCenter={{ lat: 28, lng: 31 }}
+        initialCenter={{ lat: 30, lng: 31 }}
         className={'map'}>
-        {tripList}
+        
+        {pointList}
+       
         <InfoWindow
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}
@@ -76,9 +88,9 @@ export class Trips extends Component {
         >
           <div>
             <h4>{this.state.selectedPlace.name}</h4>
-            <p>{"from " +this.state.selectedPlace.source+" to "+ this.state.selectedPlace.dest }</p>
+            <p>{"motor temp : " +this.state.selectedPlace.temp}</p>
             <BrowserRouter>
-               <Link to={"/user/trip/"+ this.state.selectedPlace.id} className=" btn-outline-danger btn">Details</Link>
+               <Link to={"/trip/"+ this.state.selectedPlace.id} className=" btn-outline-danger btn">Details</Link>
              </BrowserRouter>
             
             
@@ -92,4 +104,4 @@ export class Trips extends Component {
 
 export default GoogleApiWrapper({
   apiKey: process.env.REACT_APP_MAP_KEY
-})(Trips)
+})(TripInfo)
