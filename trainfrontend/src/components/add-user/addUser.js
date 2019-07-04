@@ -4,9 +4,9 @@ import Button from "../DumbComponents/button"
 import ImageUploader from 'react-images-upload';
 import SimpleReactValidator from 'simple-react-validator';
 import Requests from '../../authentication/authenticationWithApi'
-import axios from 'axios'
+
 class AddUser extends Component {
-   
+
     selectedfile;
     constructor(props) {
         super(props);
@@ -18,57 +18,73 @@ class AddUser extends Component {
         this.formRef = null;
 
         this.state = {
-            
+            newUser: {
                 UserName: '',
                 nationalId: '',
                 Password: '',
                 userImg: ''
-            
-            
+            },
+
         };
 
     }
-    // handleChange(e) {
+    handleChange(e) {
 
-    //     let value = e.target.value;
-    //     let name = e.target.name;
-    //     this.setState(prevState => {
-    //         return {
-    //             newUser: {
-    //                 ...prevState.newUser, [name]: value
-    //             },
+        let value = e.target.value;
+        let name = e.target.name;
 
-    //         }
+        if (name == "userImg") {
+            value = this.refs.imageToUpload.files[0].name;
+            console.log(value)
+            this.setState(prevState => {
+                return {
+                    newUser: {
+                        ...prevState.newUser, [name]: value
+                    },
 
-    //     })
-    // }
+                }
+
+            })
+        }
+        else {
+            this.setState(prevState => {
+                return {
+                    newUser: {
+                        ...prevState.newUser, [name]: value
+                    },
+
+                }
+
+            })
+        }
+    }
     // handleChangeFile(event) {
     //     this.setState({
     //         userImg: URL.createObjectURL(event.target.files[0])
     //     })
     //   }
     submitForm(e) {
-        
+
         e.preventDefault();
         console.log(this.refs.imageToUpload.files[0])
-        let x=this.refs.imageToUpload.files[0].name;
-        console.log(x)
-        this.setState({userImg:x})
-        console.log(this.state.userImg)
+        let x = this.refs.imageToUpload.files[0].name;
+        let img = new FormData();
+        img.append('photo', this.refs.imageToUpload.files[0])
+       let  axios=Request();
+        axios.post('http://localhost:5000/user/img_data', img)
+            .then(res => { console.log(res) })
         if (this.validate()) {
-         
+
+            console.log(this.state.newUser.userImg)
             if (this.SendToServer(this.state)) {
-                let img=new FormData();
-               img.append('photo',this.refs.imageToUpload.files[0])
-               axios.post('http://localhost:5000/user/img_data',img)
-               .then(res=>{console.log(res)})
+
                 this.props.history.push("/Admin/dashboard")
             }
         }
         this.formRef.reset();
     }
     SendToServer(user) {
-       let axios=Requests();
+        let axios = Requests();
         axios.post("http://localhost:5000/user/reg", user)
             .then(res => {
                 console.log(res)
@@ -90,9 +106,8 @@ class AddUser extends Component {
         });
     }
 
-    uploading(event)
-    {
-       console.log(event.target.files[0])
+    uploading(event) {
+        console.log(event.target.files[0])
     }
     render() {
         return (<div>
@@ -112,20 +127,22 @@ class AddUser extends Component {
                         {this.validator.message('nationalId', this.state.newUser.nationalId, 'required|alpha_num')}
                     </div>
 
-                    <Input title="Password" name="password" placeholder="Password" handleChange={this.handleChange} type="text" />
+                    <Input title="Password" name="Password" placeholder="Password" handleChange={this.handleChange} type="text" />
                     <div className="text-danger" style={{ display: 'flex', justifyContent: 'center', marginRight: "8%" }}>
-                        {this.validator.message('password', this.state.newUser.password, 'required|alpha_num')}
+                        {this.validator.message('password', this.state.newUser.Password, 'required|alpha_num')}
                     </div>
                     {/* <input className="form-control " type="file"
                         onChange={this.handleChangeFile} /> */}
 
                     <span>Selected Image</span>
-                        <input type="file" name="image" className="chooseFileStyle" ref="imageToUpload" />
-                    <Button className="btn btn-danger btn-block btn-large" title="Submit"
-                        action={this.submitForm} /> 
+                    <input style={{marginBottom :"4%"}} type="file" name="userImg" className="chooseFileStyle" onChange={this.handleChange} ref="imageToUpload" />
+                    <div>
+                    </div>
+                    <Button style={{ display: 'flex', justifyContent: 'center', marginLeft: "20%" }} className="btn btn-danger btn-block btn-large" title="Submit"
+                        action={this.submitForm} />
                 </fieldset>
-                </form >
-                </div>
+            </form >
+        </div>
         )
     }
 }

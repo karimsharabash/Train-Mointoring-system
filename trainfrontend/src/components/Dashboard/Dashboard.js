@@ -30,13 +30,12 @@ export default function Dashboard() {
                 size="large" color="primary" aria-label="Add" className={classes.fab}>
                 <AddIcon />
             </Fab>
-            <Fab color="secondary" aria-label="Edit" className={classes.fab}>
+            {/* <Fab href="/edit/:id" color="secondary" aria-label="Edit" className={classes.fab}>
                 <Icon>edit_icon</Icon>
             </Fab>
             <Fab disabled aria-label="Delete" className={classes.fab}>
                 <DeleteIcon />
-            </Fab>
+            </Fab> */}
         </div>
     );
 }
-

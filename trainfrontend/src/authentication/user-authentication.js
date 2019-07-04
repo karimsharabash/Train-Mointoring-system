@@ -6,7 +6,7 @@ import {Redirect,Route} from 'react-router-dom'
 const AuthRouteUser=({component:Component,...rest})=>(
 <Route {...rest} render={props=>(checkauth()?
     (<Component{...props}/>):
-    (<Redirect to={{pathname:'/login'}}/> )
+    (<Redirect to={{pathname:'/'}}/> )
     )} />)
 
 const checkauth=()=>{
@@ -16,7 +16,7 @@ const checkauth=()=>{
     // token exp data is represented in second but get time returns millsecond
     //so we divide by 1000 to compare 
     if(tokenData.exp < (new Date().getTime() / 1000))return false;
-    // if(tokenData.role=="user")return true;
+    if(tokenData.role=="user")return true;
     } 
     
 

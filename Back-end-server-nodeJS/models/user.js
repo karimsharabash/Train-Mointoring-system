@@ -29,8 +29,7 @@ const userSchema = new mongoose.Schema({
   }
   userSchema.methods.isValid = function(hashedpassword){
     console.log("the password is "+hashedpassword)
-    console.log(this)
-  console.log("the password is "+this.Password)
+    console.log("the passwordzz is "+this.Password)
     return  bcrypt.compareSync(hashedpassword,this.Password);
   }
 userSchema.plugin(uniqueValidator);

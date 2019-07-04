@@ -63,7 +63,7 @@ router.get('/',(req, res) => {
   /************************************ ****************/
   /***************post routs ***************************/
 
-  router.post('/img_data',upload.single('photo'), (req, res)=> {
+  router.post('/img_data',verfiyToken,upload.single('photo'), (req, res)=> {
     console.log(req)
     if (req.file) {
       console.log("image came");
@@ -109,7 +109,6 @@ router.get('/',(req, res) => {
         console.log(data)
       if (data.isValid(password)) {
         let token = jwt.sign({ role: data.role }, 'secret',{expiresIn : '12h'});
-       console.log(token)
         res.json(token)
       }
       else {
@@ -124,11 +123,11 @@ router.get('/',(req, res) => {
   
 
 
-  router.post('/reg',upload.single('image'),(req, res) => {
+  router.post('/reg',verfiyToken,upload.single('image'),(req, res) => {
     console.log(req.headers)
     console.log(req.body);
     
-    userModel.find({nationalId: req.body.nationalId}).exec()
+    userModel.find({nationalId: req.body.newUser.nationalId}).exec()
       .then(user =>{
          // to create users with only unique email
         if (user.length >= 1) {
@@ -136,13 +135,13 @@ router.get('/',(req, res) => {
             //conflict 
           return res.status(409).json({message: "user already exists "})}
         else {
-          let password = req.body.password;
+          let password = req.body.newUser.Password;
               const user = new userModel({
                 _id: new mongoose.Types.ObjectId(),
-                userName: req.body.UserName,
+                userName: req.body.newUser.UserName,
                 Password:  userModel.hashThePassword(password),
-                nationalId: req.body.nationalId,
-                userImg: req.body.userImg,
+                nationalId: req.body.newUser.nationalId,
+                userImg: req.body.newUser.userImg,
                 role:"user"})
                 user.save().then(result => {
                   res.status(201).json({
@@ -161,10 +160,57 @@ router.get('/',(req, res) => {
 
   /************************************* */
 
-router.post('/up',(req,res)=>{
+/************************Edit User*************************/
+// Defined edit route
+router.get('/edit/:id', verfiyToken,(req, res) => {
+  let id = req.params.id;
 
-console.log(req.body);
-console.log(req.data);
-})
+  userModel.findById(id, function (err, data) {
+    res.json(data);
+  });
+});
+
+//  Defined update route
+router.post('/update/:id', verfiyToken,(req, res) => {
+  userModel.findById(req.params.id, function (err, user) {
+    if (!user)
+      res.status(404).send("data is not found");
+    else {
+  // / user.Password
+      
+      console.log("edit ");
+
+      console.log(req.body);
+
+      user.nationalId = req.body.nationalId;
+      user.userName = req.body.userName;
+      user.Password =user.Password
+
+console.log(user);
+
+      user.save()
+        .then(user => {
+          console.log(user);
+          res.json('Update complete');
+        })
+        .catch(err => {
+          console.log(err);
+          
+          res.status(400).send("unable to update the database");
+        });
+    }
+  });
+});
+
+/************************delete user********************* */
+
+router.get('/delete/:id', verfiyToken,(req, res) => {
+  userModel.findByIdAndRemove({ _id: req.params.id }, (err, user) => {
+    if (err) res.json(err);
+    else res.json('Successfully removed');
+  });
+});
+
+/************************************* */
 
   module.exports = router;
