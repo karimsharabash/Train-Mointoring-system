@@ -1,7 +1,8 @@
 import { Map, InfoWindow, Marker, GoogleApiWrapper ,Polyline} from 'google-maps-react';
 import React, { Component } from 'react';
-import axios from 'axios';
+
 import { Link,BrowserRouter } from 'react-router-dom'
+import Requests from '../../../authentication/authenticationWithApi';
 const mapStyles = {
   width: '100%',
   height: '100%'
@@ -35,7 +36,7 @@ export class TripInfo extends Component {
   };
 
   componentDidMount() {
-   
+    const axios = Requests();
     
     axios.get("http://localhost:5000/trip/"+this.tripId)
       .then((res) => {

@@ -70,7 +70,7 @@ class AddUser extends Component {
         let x = this.refs.imageToUpload.files[0].name;
         let img = new FormData();
         img.append('photo', this.refs.imageToUpload.files[0])
-       let  axios=Request();
+       let  axios=Requests();
         axios.post('http://localhost:5000/user/img_data', img)
             .then(res => { console.log(res) })
         if (this.validate()) {
@@ -88,6 +88,8 @@ class AddUser extends Component {
         axios.post("http://localhost:5000/user/reg", user)
             .then(res => {
                 console.log(res)
+                this.props.history.push('/Admin/dashboard/list');
+
             })
     }
 

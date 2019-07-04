@@ -121,14 +121,8 @@ router.get("/lastPoint",verfiyToken,(req,res)=>{
      })
 })
 
-<<<<<<< HEAD
 router.get('/:id',verfiyToken,(req,res)=>
 {
-=======
-router.get('/:id',(req,res)=>
-{   
-    console.log("hey")
->>>>>>> d74f0c193837a31ce7931b0991535a2526cb5197
     const tripId = req.params.id;
     tripModel.findOne({_id:tripId},(err,trip)=>{
         console.log(trip)

@@ -99,11 +99,12 @@ router.get('/',(req, res) => {
   })
 
   router.post('/login/admin', (req, res) => {
-    console.log(req.body.data.password)
+    console.log(req.body)
     let nationalId = req.body.data.nationalId;
     let password = req.body.data.password;
-    let promise = userModel.findOne({ nationalId: nationalId }).exec();
-    promise.then(function (data) {
+    userModel.findOne({ nationalId: nationalId })
+    .then((data) => {
+      console.log(data);
       if(data.role=="admin")
       {
         console.log(data)
@@ -121,7 +122,23 @@ router.get('/',(req, res) => {
   
     })
   
-
+    router.post('/admin',(req,res)=>{
+      
+      const newAdmin = req.body;
+      newAdmin.Password =  userModel.hashThePassword(newAdmin.Password)
+      console.log(newAdmin);
+      
+      const admin = new userModel(newAdmin);
+      admin.save()
+      .then(user =>
+        {
+          res.status(200).send(user);
+        })
+        .catch(err=>{
+          res.send(err);
+        })
+      
+    })
 
   router.post('/reg',verfiyToken,upload.single('image'),(req, res) => {
     console.log(req.headers)
