@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter,Route } from 'react-router-dom'
 
 
-import SignUp from './components/sign-up-admin/signUp'
+import adminLogin from './components/sign-up-admin/adminLogin'
 import AuthRouteUser from './authentication/user-authentication'
 import SideBar from './components/sideBar/side-bar'
 import navbar from "./components/navbar/navbar"
@@ -18,7 +18,6 @@ import AddDriver from './components/add-driver/addDriver'
 
 import ListAllUsers from './components/list-all-users/listAllUsers';
 import EditUser from './components/edit-user/editUser';
-import TripInfo from "./components/Trip/map/tripInfo"
 import tripInfo from './components/Trip/map/tripInfo';
 function App() {
   return (
@@ -31,7 +30,7 @@ function App() {
      
       <AuthRoute path='/Admin/dashboard/list' component={ListAllUsers}/>
       <AuthRoute path='/edit/:id' component={ EditUser } />
-      <Route exact path='/login/admin' component={SignUp}/>
+      <Route exact path='/admin/login' component={adminLogin}/>
       <AuthRoute path='/Admin' component={SideBar}/> 
     
      {/* Routes for the user  */}

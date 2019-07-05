@@ -45,7 +45,7 @@ const upload = multer({ storage: storage });
 // });
 
 /***************get routes ****************************/
-router.get('/',(req, res) => {
+router.get('/', (req, res) => {
   console.log('req')
   //   userModel.find({}).then(data => {
   //     res.send(data)
@@ -60,126 +60,130 @@ router.get('/',(req, res) => {
 
     })
 })
-  /************************************ ****************/
-  /***************post routs ***************************/
+/************************************ ****************/
+/***************post routs ***************************/
 
-  router.post('/img_data',verfiyToken,upload.single('photo'), (req, res)=> {
-    console.log(req)
-    if (req.file) {
-      console.log("image came");
-      res.send("done");
-    }
-    else res.send("failed");
-  
-  })
+router.post('/img_data', verfiyToken, upload.single('photo'), (req, res) => {
+  console.log(req)
+  if (req.file) {
+    console.log("image came");
+    res.send("done");
+  }
+  else res.send("failed");
 
-  router.post('/login', (req, res) => {
+})
+
+router.post('/login', (req, res) => {
   console.log(req.body.data.password)
   let nationalId = req.body.data.nationalId;
   let password = req.body.data.password;
   let promise = userModel.findOne({ nationalId: nationalId }).exec();
   promise.then(function (data) {
-    if(data.role=="user")
-    {
+    if (data.role == "user") {
       console.log(data)
-   
-    if (data.isValid(password)) {
-      let token = jwt.sign({ role: data.role }, 'secret',{expiresIn : '12h'});
-     console.log(token)
-      res.json(token)
-    }
-    else {
-     res.send("invalid password")
-    }
-  }else{
-    res.send("no such a user")
-  }
-  })
 
-  })
-
-  router.post('/login/admin', (req, res) => {
-    console.log(req.body)
-    let nationalId = req.body.data.nationalId;
-    let password = req.body.data.password;
-    userModel.findOne({ nationalId: nationalId })
-    .then((data) => {
-      console.log(data);
-      if(data.role=="admin")
-      {
-        console.log(data)
       if (data.isValid(password)) {
-        let token = jwt.sign({ role: data.role }, 'secret',{expiresIn : '12h'});
+        let token = jwt.sign({ role: data.role }, 'secret', { expiresIn: '12h' });
+        console.log(token)
         res.json(token)
       }
       else {
-       res.send("invalid password")
+        res.send("invalid password")
       }
-    }else{
+    } else {
       res.send("no such a user")
     }
-    })
-  
-    })
-  
-    router.post('/admin',(req,res)=>{
+  })
+
+})
+
+router.post('/login/admin', (req, res) => {
+  console.log(req.body)
+  let nationalId = req.body.data.nationalId;
+  let password = req.body.data.password;
+  userModel.findOne({ nationalId: nationalId })
+    .then((data) => {
+     
+      if (data === null) {
+       return res.send("userError")
+      }
+      if (data.role == "admin") {
       
-      const newAdmin = req.body;
-      newAdmin.Password =  userModel.hashThePassword(newAdmin.Password)
-      console.log(newAdmin);
-      
-      const admin = new userModel(newAdmin);
-      admin.save()
-      .then(user =>
-        {
-          res.status(200).send(user);
-        })
-        .catch(err=>{
-          res.send(err);
-        })
-      
+        if (data.isValid(password)) {
+          let token = jwt.sign({ role: data.role }, 'secret', { expiresIn: '12h' });
+          res.json(token)
+        }
+        else {
+          res.send("passwordError")
+        }
+      }
     })
 
-  router.post('/reg',verfiyToken,upload.single('image'),(req, res) => {
-    console.log(req.headers)
-    console.log(req.body);
-    
-    userModel.find({nationalId: req.body.newUser.nationalId}).exec()
-      .then(user =>{
-         // to create users with only unique email
-        if (user.length >= 1) {
-          // console.log("3added el users " + user.length);
-            //conflict 
-          return res.status(409).json({message: "user already exists "})}
-        else {
-          let password = req.body.newUser.Password;
-              const user = new userModel({
-                _id: new mongoose.Types.ObjectId(),
-                userName: req.body.newUser.UserName,
-                Password:  userModel.hashThePassword(password),
-                nationalId: req.body.newUser.nationalId,
-                userImg: req.body.newUser.userImg,
-                role:"user"})
-                user.save().then(result => {
-                  res.status(201).json({
-                    message: "user created",
-                    result: result});})
-                .catch(err => {
-                  console.log(err);
-                  res.status(500).json({
-                    error: err
-                  })})}
+})
+
+router.post('/admin', (req, res) => {
+
+  const newAdmin = req.body;
+  newAdmin.Password = userModel.hashThePassword(newAdmin.Password)
+  console.log(newAdmin);
+
+  const admin = new userModel(newAdmin);
+  admin.save()
+    .then(user => {
+      res.status(200).send(user);
+    })
+    .catch(err => {
+      res.send(err);
+    })
+
+})
+
+router.post('/reg', verfiyToken, upload.single('image'), (req, res) => {
+  console.log(req.headers)
+  console.log(req.body);
+
+  userModel.find({ nationalId: req.body.newUser.nationalId }).exec()
+    .then(user => {
+      // to create users with only unique email
+      if (user.length >= 1) {
+        // console.log("3added el users " + user.length);
+        //conflict 
+        return res.status(409).json({ message: "user already exists " })
+      }
+      else {
+        let password = req.body.newUser.Password;
+        const user = new userModel({
+          _id: new mongoose.Types.ObjectId(),
+          userName: req.body.newUser.UserName,
+          Password: userModel.hashThePassword(password),
+          nationalId: req.body.newUser.nationalId,
+          userImg: req.body.newUser.userImg,
+          role: "user"
+        })
+        user.save().then(result => {
+          res.status(201).json({
+            message: "user created",
+            result: result
           });
         })
-    
+          .catch(err => {
+            console.log(err);
+            res.status(500).json({
+              error: err
+            })
+          })
+      }
+    });
+})
 
 
 
-  /************************************* */
+
+/************************************* */
 
 /************************Edit User*************************/
 // Defined edit route
-router.get('/edit/:id', verfiyToken,(req, res) => {
+router.get('/edit/:id', verfiyToken, (req, res) => {
   let id = req.params.id;
 
   userModel.findById(id, function (err, data) {
@@ -188,22 +192,22 @@ router.get('/edit/:id', verfiyToken,(req, res) => {
 });
 
 //  Defined update route
-router.post('/update/:id', verfiyToken,(req, res) => {
+router.post('/update/:id', verfiyToken, (req, res) => {
   userModel.findById(req.params.id, function (err, user) {
     if (!user)
       res.status(404).send("data is not found");
     else {
-  // / user.Password
-      
+      // / user.Password
+
       console.log("edit ");
 
       console.log(req.body);
 
       user.nationalId = req.body.nationalId;
       user.userName = req.body.userName;
-      user.Password =user.Password
+      user.Password = user.Password
 
-console.log(user);
+      console.log(user);
 
       user.save()
         .then(user => {
@@ -212,7 +216,7 @@ console.log(user);
         })
         .catch(err => {
           console.log(err);
-          
+
           res.status(400).send("unable to update the database");
         });
     }
@@ -221,7 +225,7 @@ console.log(user);
 
 /************************delete user********************* */
 
-router.get('/delete/:id', verfiyToken,(req, res) => {
+router.get('/delete/:id', verfiyToken, (req, res) => {
   userModel.findByIdAndRemove({ _id: req.params.id }, (err, user) => {
     if (err) res.json(err);
     else res.json('Successfully removed');
@@ -230,4 +234,4 @@ router.get('/delete/:id', verfiyToken,(req, res) => {
 
 /************************************* */
 
-  module.exports = router;
+module.exports = router;
