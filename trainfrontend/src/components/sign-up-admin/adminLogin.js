@@ -26,11 +26,11 @@ class adminLogin extends Component {
         if(response.data==="passwordError")
         {
             //error message 
-           this.setState({passwordError:true});
+           this.setState({passwordError:true,userError:false});
         }else if(response.data==="userError")
         {
             //error message 
-           this.setState({userError:true});
+           this.setState({userError:true,passwordError:false});
         } 
         else{
             sessionStorage.setItem('token',response.data.toString())

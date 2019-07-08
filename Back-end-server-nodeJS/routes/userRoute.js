@@ -74,27 +74,26 @@ router.post('/img_data', verfiyToken, upload.single('photo'), (req, res) => {
 })
 
 router.post('/login', (req, res) => {
-  console.log(req.body.data.password)
-  let nationalId = req.body.data.nationalId;
+  console.log(req.body.data)
+  let userName = req.body.data.userName;
   let password = req.body.data.password;
-  let promise = userModel.findOne({ nationalId: nationalId }).exec();
-  promise.then(function (data) {
-    if (data.role == "user") {
-      console.log(data)
-
-      if (data.isValid(password)) {
-        let token = jwt.sign({ role: data.role }, 'secret', { expiresIn: '12h' });
-        console.log(token)
-        res.json(token)
+  userModel.findOne({ userName: userName })
+    .then((data) => {
+      if (data === null) {
+        return res.send("userError")
       }
-      else {
-        res.send("invalid password")
-      }
-    } else {
-      res.send("no such a user")
-    }
-  })
+      if(password == null) return res.send("passwordError")  
 
+      if (data.role == "user") {
+        if (data.isValid(password)) {
+          let token = jwt.sign({ role: data.role }, 'secret', { expiresIn: '12h' });
+          res.json(token)
+        }
+        else {
+          res.send("passwordError")
+        }
+      }
+    })
 })
 
 router.post('/login/admin', (req, res) => {
@@ -103,12 +102,13 @@ router.post('/login/admin', (req, res) => {
   let password = req.body.data.password;
   userModel.findOne({ nationalId: nationalId })
     .then((data) => {
-     
+      console.log(data)
       if (data === null) {
-       return res.send("userError")
+          return res.send("userError")
       }
+      if(password == null) return res.send("passwordError")  
       if (data.role == "admin") {
-      
+
         if (data.isValid(password)) {
           let token = jwt.sign({ role: data.role }, 'secret', { expiresIn: '12h' });
           res.json(token)
@@ -175,9 +175,6 @@ router.post('/reg', verfiyToken, upload.single('image'), (req, res) => {
       }
     });
 })
-
-
-
 
 /************************************* */
 
