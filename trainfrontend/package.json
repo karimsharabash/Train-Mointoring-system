@@ -10,7 +10,7 @@
     "dotenv": "^8.0.0",
     "google-map-react": "^1.1.4",
     "google-maps-react": "^2.0.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jwt-decode": "^2.2.0",
     "mdbreact": "^4.16.0",
     "package.json": "^2.0.1",
